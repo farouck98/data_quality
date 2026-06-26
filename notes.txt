@@ -1,0 +1,49 @@
+## Décision n°7 - Dédoublonnage des points de charge
+
+### Problème observé
+
+Plusieurs lignes partageaient le même identifiant `id_pdc_itinerance`.
+
+### Vérification effectuée
+
+L'analyse des dates a montré que ces lignes correspondaient à différentes versions d'un même point de charge et non à des doublons techniques stricts.
+
+### Options envisagées
+
+1. Conserver toutes les lignes
+2. Supprimer arbitrairement les répétitions
+3. Conserver la version la plus récente
+
+Conserver la ligne la plus récente selon `date_maj`.
+
+
+Les répétitions correspondent à l'historique des mises à jour d'un même point de charge.
+
+### Résultat
+
+- Avant : 227232 lignes
+- Après : 160138 lignes
+- Lignes supprimées : 67094
+
+
+La colonne consolidated_code_postal contient un grand nombre de valeurs manquantes.
+Choix:
+Imputation à partir des coordonnées GPS identiques.
+
+Lorsque plusieurs bornes partagent les mêmes coordonnées GPS,
+le code postal connu peut être réutilisé.
+
+Avant	92 870
+Après	79 938
+Imputés	12 932
+
+##Certaines puissances sont probablement exprimées en watts au lieu de kilowatts.
+Création de deux indicateurs qualité :
+
+flag_puissance_watts pour :identifier les puissances probablement exprimées en
+ watts.
+flag_puissance_nulle pour : identifier les puissances à 0 kW.
+
+
+
+
